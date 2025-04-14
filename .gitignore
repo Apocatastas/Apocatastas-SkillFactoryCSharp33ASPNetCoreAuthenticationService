@@ -5,3 +5,4 @@
 /.vs
 /AuthentificationService/.vs/AuthentificationService
 /AuthentificationService/obj
+/AuthentificationService/bin/Debug/net9.0
