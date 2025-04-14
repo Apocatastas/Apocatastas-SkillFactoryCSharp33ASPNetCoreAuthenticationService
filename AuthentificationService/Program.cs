@@ -1,15 +1,43 @@
-var builder = WebApplication.CreateBuilder(args);
+using AuthentificationService.AuthentificationService.Models;
+using AuthentificationService.Models.Repositories;
+using AutoMapper;
 
-// Add services to the container.
+namespace AuthentificationService
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+            builder.Services.AddSingleton<Models.ILogger, Logger>();
 
-var app = builder.Build();
+            var mapperConfig = new MapperConfiguration((v) => { v.AddProfile(new MappingProfile()); });
+            IMapper mapper = mapperConfig.CreateMapper();
+            builder.Services.AddSingleton(mapper);
 
-// Configure the HTTP request pipeline.
 
-app.UseAuthorization();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
-app.MapControllers();
+            builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
-app.Run();
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
+}

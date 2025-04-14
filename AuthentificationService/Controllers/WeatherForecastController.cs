@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using AuthentificationService.AuthentificationService.Models;
 
 namespace AuthentificationService.Controllers;
 
