@@ -14,6 +14,7 @@
                     LastName = "Inferno",
                     Email = "Xiron@inferno.ee",
                     Password = "password",
+                    Login = "Xiron",
                     Role = new Role() {
                       Id = 2,
                       Name = "Администратор"
@@ -26,6 +27,7 @@
                     LastName = "Dark",
                     Email = "olema@cabba.la",
                     Password = "password",
+                    Login = "Olema",
                     Role = new Role() {
                       Id = 2,
                       Name = "Администратор"
@@ -38,6 +40,7 @@
                     LastName = "Heretic",
                     Email = "axis@might.me",
                     Password = "password",
+                    Login = "Axis",
                     Role = new Role() {
                       Id = 1,
                       Name = "Пользователь"
@@ -50,6 +53,7 @@
                     LastName = "Overlord",
                     Email = "xarfax@fluffy.be",
                     Password = "password",
+                    Login = "Xarfax",
                     Role = new Role() {
                       Id = 1,
                       Name = "Пользователь"
@@ -62,6 +66,7 @@
                     LastName = "Mighty",
                     Email = "zydar@lead.no",
                     Password = "password",
+                    Login = "Zydar",
                     Role = new Role() {
                       Id = 1,
                       Name = "Пользователь"

@@ -28,7 +28,7 @@ namespace AuthentificationService.Controllers
             logger.WriteError("Сообщение об ошибки в программе");
 
         }
-        [Authorize]
+        [Authorize(Roles = "Администратор")]
         [HttpPost]
         [Route("authenticate")]
         public async  Task<UserViewModel> Authenticate(string login, string password)
@@ -47,7 +47,7 @@ namespace AuthentificationService.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
                  new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
             };
 
