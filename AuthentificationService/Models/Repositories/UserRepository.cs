@@ -77,5 +77,11 @@
             var users = GetAll();
             return users.FirstOrDefault(x => x.Email == email);
         }
+
+        public User GetByLogin(string login)
+        {
+            var users = GetAll();
+            return users.FirstOrDefault(x => x.Login == login);
+        }
     }
 }

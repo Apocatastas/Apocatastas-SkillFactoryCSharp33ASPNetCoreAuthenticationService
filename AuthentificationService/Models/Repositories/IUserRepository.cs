@@ -4,5 +4,6 @@
     {
         IEnumerable<User> GetAll();
         User GetByEmail(string login);
+        User GetByLogin(string login);
     }
 }

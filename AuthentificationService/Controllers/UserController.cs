@@ -1,8 +1,13 @@
 ﻿using AuthentificationService.Models;
 using AuthentificationService.Models.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthentificationService.Controllers
 {
@@ -22,6 +27,46 @@ namespace AuthentificationService.Controllers
             logger.WriteEvent("Сообщение о событии в программе");
             logger.WriteError("Сообщение об ошибки в программе");
 
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("authenticate")]
+        public async  Task<UserViewModel> Authenticate(string login, string password)
+        {
+            if (String.IsNullOrEmpty(login) ||
+              String.IsNullOrEmpty(password))
+                throw new ArgumentNullException("Запрос не корректен");
+
+            User user = _userRepository.GetByLogin(login);
+
+            if (user is null)
+                throw new AuthenticationException("Пользователь на найден");
+
+            if (user.Password != password)
+                throw new AuthenticationException("Введенный пароль не корректен");
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                claims,
+                "AppCookie",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType
+                );
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true, // Сделать куки постоянными
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(1) // Истечение через n минут
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+            return _mapper.Map<UserViewModel>(user);
         }
 
         [HttpGet]

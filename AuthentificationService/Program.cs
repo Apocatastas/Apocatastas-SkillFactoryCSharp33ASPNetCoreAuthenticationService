@@ -23,6 +23,18 @@ namespace AuthentificationService
 
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
+            builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies").AddCookie("Cookies", options =>
+            {
+                options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = redirectContext =>
+                    {
+                        redirectContext.HttpContext.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
