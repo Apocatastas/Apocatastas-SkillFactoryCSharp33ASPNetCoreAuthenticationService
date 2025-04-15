@@ -1,4 +1,4 @@
-﻿\namespace AuthentificationService
+﻿namespace AuthentificationService
 {
     public class CustomException : Exception
     {

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AuthentificationService.Controllers
 {
+    [ExceptionHandler]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -19,28 +20,27 @@ namespace AuthentificationService.Controllers
         private IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
+
         public UserController(Models.ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _mapper = mapper;
             _userRepository = userRepository;
             logger.WriteEvent("Сообщение о событии в программе");
-            logger.WriteError("Сообщение об ошибки в программе");
+            logger.WriteError("Сообщение об ошибке в программе");
 
         }
-        [Authorize(Roles = "Администратор")]
+
         [HttpPost]
         [Route("authenticate")]
-        public async  Task<UserViewModel> Authenticate(string login, string password)
+        public async Task<UserViewModel> Authenticate(string login, string password)
         {
-            if (String.IsNullOrEmpty(login) ||
-              String.IsNullOrEmpty(password))
+            if (String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password))
                 throw new ArgumentNullException("Запрос не корректен");
 
             User user = _userRepository.GetByLogin(login);
-
             if (user is null)
-                throw new AuthenticationException("Пользователь на найден");
+                throw new AuthenticationException("Пользователь не найден");
 
             if (user.Password != password)
                 throw new AuthenticationException("Введенный пароль не корректен");
@@ -48,23 +48,16 @@ namespace AuthentificationService.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(
                 claims,
                 "AppCookie",
                 ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType
-                );
+                ClaimsIdentity.DefaultRoleClaimType);
 
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true, // Сделать куки постоянными
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(1) // Истечение через n минут
-            };
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             return _mapper.Map<UserViewModel>(user);
         }
@@ -83,6 +76,7 @@ namespace AuthentificationService.Controllers
             };
         }
 
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
         [Route("viewmodel")]
         public UserViewModel GetUserViewModel()
