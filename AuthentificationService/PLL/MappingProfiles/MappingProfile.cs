@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using AuthentificationService.BLL.ViewModels;
-using AuthentificationService.BLL.Models;
 
 namespace AuthentificationService.PLL.MappingProfiles
 {

@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.OpenApi.Models;
-using AuthentificationService.AuthentificationService.Models;
-using AuthentificationService.PLL.Middlewares;
-using AuthentificationService.DAL.Repositories;
 
 namespace AuthentificationService
 {
@@ -17,7 +14,7 @@ namespace AuthentificationService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<AuthentificationService.PLL.Logging.ILogger, Logger>();
+            services.AddSingleton<PLL.Logging.ILogger, PLL.Logging.Logger>();
             var mapperConfig = new MapperConfiguration((v) =>
             {
                 v.AddProfile(new MappingProfile());

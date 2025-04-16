@@ -1,12 +1,9 @@
-﻿namespace AuthentificationService
-{
-    using global::AuthentificationService.Models;
-    using System;
+﻿    using System;
     using System.IO;
     using System.Threading;
 
 
-    namespace AuthentificationService.Models
+    namespace AuthentificationService.PLL.Logging
     {
         public class Logger : ILogger
         {
@@ -61,4 +58,3 @@
             }
         }
     }
-}

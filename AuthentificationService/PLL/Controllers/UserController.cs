@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using AuthentificationService.BLL.ViewModels;
-using AuthentificationService.DAL.Repositories;
-using AuthentificationService.BLL.Models;
+
 
 namespace AuthentificationService.PLL.Controllers
 {
@@ -17,12 +15,12 @@ namespace AuthentificationService.PLL.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private AuthentificationService.PLL.Logging.ILogger _logger;
+        private Logging.ILogger _logger;
         private IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
 
-        public UserController(AuthentificationService.PLL.Logging.ILogger logger, IMapper mapper, IUserRepository userRepository)
+        public UserController(Logging.ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _mapper = mapper;

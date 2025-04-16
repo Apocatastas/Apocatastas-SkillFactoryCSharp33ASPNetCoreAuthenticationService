@@ -1,13 +1,11 @@
-﻿using AuthentificationService.AuthentificationService.Models;
-
-namespace AuthentificationService.PLL.Middlewares
+﻿namespace AuthentificationService.PLL.Middlewares
 {
     public class LogMiddleware
     {
-        private readonly AuthentificationService.PLL.Logging.ILogger _logger;
+        private readonly PLL.Logging.ILogger _logger;
         private readonly RequestDelegate _next;
 
-        public LogMiddleware(RequestDelegate next, AuthentificationService.PLL.Logging.ILogger logger)
+        public LogMiddleware(RequestDelegate next, PLL.Logging.ILogger logger)
         {
             _next = next;
             _logger = logger;
