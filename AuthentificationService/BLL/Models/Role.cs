@@ -1,4 +1,4 @@
-﻿namespace AuthentificationService.Models
+﻿namespace AuthentificationService.BLL.Models
 {
     public class Role
     {

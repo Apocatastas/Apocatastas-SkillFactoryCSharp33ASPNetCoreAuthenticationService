@@ -1,6 +1,4 @@
-﻿using AuthentificationService.Models;
-using AuthentificationService.Models.Repositories;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -8,20 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using AuthentificationService.BLL.ViewModels;
+using AuthentificationService.DAL.Repositories;
+using AuthentificationService.BLL.Models;
 
-namespace AuthentificationService.Controllers
+namespace AuthentificationService.PLL.Controllers
 {
     [ExceptionHandler]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private Models.ILogger _logger;
+        private AuthentificationService.PLL.Logging.ILogger _logger;
         private IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
 
-        public UserController(Models.ILogger logger, IMapper mapper, IUserRepository userRepository)
+        public UserController(AuthentificationService.PLL.Logging.ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -35,7 +36,7 @@ namespace AuthentificationService.Controllers
         [Route("authenticate")]
         public async Task<UserViewModel> Authenticate(string login, string password)
         {
-            if (String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 throw new ArgumentNullException("Запрос не корректен");
 
             User user = _userRepository.GetByLogin(login);

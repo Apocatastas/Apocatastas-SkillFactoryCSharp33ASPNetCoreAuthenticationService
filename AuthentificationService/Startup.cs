@@ -1,7 +1,8 @@
-﻿using AuthentificationService.Models.Repositories;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.OpenApi.Models;
 using AuthentificationService.AuthentificationService.Models;
+using AuthentificationService.PLL.Middlewares;
+using AuthentificationService.DAL.Repositories;
 
 namespace AuthentificationService
 {
@@ -16,7 +17,7 @@ namespace AuthentificationService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<Models.ILogger, Logger>();
+            services.AddSingleton<AuthentificationService.PLL.Logging.ILogger, Logger>();
             var mapperConfig = new MapperConfiguration((v) =>
             {
                 v.AddProfile(new MappingProfile());

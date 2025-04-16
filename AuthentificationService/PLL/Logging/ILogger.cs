@@ -1,4 +1,4 @@
-﻿namespace AuthentificationService.Models
+﻿namespace AuthentificationService.PLL.Logging
 {
     public interface ILogger
     {

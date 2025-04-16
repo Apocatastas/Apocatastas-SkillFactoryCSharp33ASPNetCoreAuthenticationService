@@ -1,6 +1,7 @@
-﻿using System.Net.Mail;
+﻿using AuthentificationService.BLL.Models;
+using System.Net.Mail;
 
-namespace AuthentificationService.Models
+namespace AuthentificationService.BLL.ViewModels
 {
     public class UserViewModel
     {
@@ -18,7 +19,7 @@ namespace AuthentificationService.Models
 
         public string GetFullName(string firstName, string lastName)
         {
-            return String.Concat(firstName, " ", lastName);
+            return string.Concat(firstName, " ", lastName);
         }
 
         public bool GetFromRussiaValue(string email)

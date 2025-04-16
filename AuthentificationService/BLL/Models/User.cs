@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace AuthentificationService.Models
+namespace AuthentificationService.BLL.Models
 {
     public class User
     {

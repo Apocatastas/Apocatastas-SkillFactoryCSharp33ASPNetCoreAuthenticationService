@@ -1,4 +1,4 @@
-﻿namespace AuthentificationService
+﻿namespace AuthentificationService.PLL.Exceptions
 {
     public class CustomException : Exception
     {

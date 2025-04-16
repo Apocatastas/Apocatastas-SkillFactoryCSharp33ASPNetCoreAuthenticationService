@@ -1,4 +1,6 @@
-﻿namespace AuthentificationService.Models.Repositories
+﻿using AuthentificationService.BLL.Models;
+
+namespace AuthentificationService.DAL.Repositories
 {
     public interface IUserRepository
     {
